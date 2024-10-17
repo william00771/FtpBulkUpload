@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  ftp_server1:
+    image: stilliard/pure-ftpd
+    container_name: ftp_server1
+    ports:
+      - "2221:21"
+      - "30000-30009:30000-30009"
+    environment:
+      FTP_USER_NAME: "ftpuser1"
+      FTP_USER_PASS: "ftpuser1pass"
+      FTP_USER_HOME: "/home/ftpuser1"
+      FTP_PASSIVE_PORTS: "30000:30009"
+    volumes:
+      - ${PWD}/ftp_data/ftp_data1:/home/ftpuser1
+
+  ftp_server2:
+    image: stilliard/pure-ftpd
+    container_name: ftp_server2
+    ports:
+      - "2222:21"
+      - "30010-30019:30010-30019"
+    environment:
+      FTP_USER_NAME: "ftpuser2"
+      FTP_USER_PASS: "ftpuser2pass"
+      FTP_USER_HOME: "/home/ftpuser2"
+      FTP_PASSIVE_PORTS: "30010:30019"
+    volumes:
+      - ${PWD}/ftp_data/ftp_data2:/home/ftpuser2
+
+  sftp_server1:
+    image: atmoz/sftp
+    container_name: sftp_server1
+    ports:
+      - "2223:22"
+    environment:
+      SFTP_USERS: "sftpuser1:sftpuser1:1001"
+    volumes:
+      - ${PWD}/sftp_data/sftp_data1:/home/sftpuser1/upload
+
+  sftp_server2:
+    image: atmoz/sftp
+    container_name: sftp_server2
+    ports:
+      - "2224:22"
+    environment:
+      SFTP_USERS: "sftpuser2:sftpuser2:1002"
+    volumes:
+      - ${PWD}/sftp_data/sftp_data2:/home/sftpuser2/upload

@@ -5,6 +5,7 @@
 
 # dotenv files
 .env
+*.pdf
 
 # User-specific files
 *.rsuser
